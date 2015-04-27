@@ -21,15 +21,15 @@ public class CThostFtdcDepthMarketDataField{
 	public double	PreOpenInterest;
 	///今开盘
 	public double	OpenPrice;
-	///��߼�
+	///最高价
 	public double	HighestPrice;
-	///��ͼ�
+	///最低价
 	public double	LowestPrice;
-	///����
+	///数量
 	public double	Volume;
-	///�ɽ����
+	///成交金额
 	public double	Turnover;
-	///�ֲ���
+	///持仓量
 	public double	OpenInterest;
 	///������
 	public double	ClosePrice;
