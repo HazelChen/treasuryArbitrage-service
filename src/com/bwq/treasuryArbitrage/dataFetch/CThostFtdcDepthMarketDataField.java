@@ -31,23 +31,23 @@ public class CThostFtdcDepthMarketDataField{
 	public double	Turnover;
 	///持仓量
 	public double	OpenInterest;
-	///������
+	///今收盘
 	public double	ClosePrice;
-	///���ν����
+	///本次结算价
 	public double	SettlementPrice;
-	///��ͣ���
+	///涨停板价
 	public double	UpperLimitPrice;
-	///��ͣ���
+	///跌停板价
 	public double	LowerLimitPrice;
-	///����ʵ��
+	///昨虚实度
 	public double	PreDelta;
-	///����ʵ��
+	///今虚实度
 	public double	CurrDelta;
-	///����޸�ʱ��
+	///最后修改时间
 	public String	UpdateTime;
-	///����޸ĺ���
+	///最后修改毫秒
 	public double	UpdateMillisec;
-	///�����һ
+	///申买价一
 	public double	BidPrice1;
 	///������һ
 	public double	BidVolume1;
