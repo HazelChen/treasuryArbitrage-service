@@ -6,23 +6,27 @@ import java.util.Date;
 
 import com.bwq.treasuryArbitrage.common.ArbitrageCodes;
 import com.bwq.treasuryArbitrage.database.DatabaseUtil;
+import com.bwq.treasuryArbitrage.database.ModelParamsService;
 
 public class XyzCalculator implements Runnable {
-	double buyprice, saleprice;
+	double buyprice, saleprice,tradeCost;
 	Date now;
 	int now_hour, now_min;
 	boolean todayRun, sleepPF;
 	MatlabCaller dm;
 	Object[] result;
-
+	ModelParamsService ms;
+	
 	public XyzCalculator() {
 		buyprice = 0;
 		saleprice = 0;
+		tradeCost = 0;
 		now = new Date();
-		todayRun = false;// ��¼�����Ƿ����й�Arbitrage_Main����
+		todayRun = false;// Arbitrage_Main run?
 		sleepPF = true;
 		dm = new MatlabCaller();
 		result = null;
+		ms = new ModelParamsService();
 	}
 
 	public void run() {
@@ -36,7 +40,7 @@ public class XyzCalculator implements Runnable {
 			if (now_hour == 0 && now_min < 2) {
 				todayRun = false;
 			}
-			// ��������ʱ��
+			// 
 			if (!todayRun && now_hour >= 0 && now_min >= 2) {
 				todayRun = true;
 				sleepPF = true;
@@ -45,7 +49,7 @@ public class XyzCalculator implements Runnable {
 				for (int p = 1; p < 4; p++) // p������
 				{
 					String[] codes = ArbitrageCodes.getCodes();
-					// ��ȡ���
+					// 
 					switch (p) {
 					case 1:
 						p1 = codes[0];
@@ -67,7 +71,7 @@ public class XyzCalculator implements Runnable {
 
 					ArrayList<SimpleArbitrage> lf1 = DatabaseUtil.getHistoryArbitrages(p1);// �������
 					ArrayList<SimpleArbitrage> lf2 = DatabaseUtil.getHistoryArbitrages(p2);// �������
-					// ��ȷ������ OK��
+					// 
 					for (int i = 0; i < lf1.size() - 1;) {
 						if (lf1.get(i).getDate().getTime() / 60000 == lf1.get(i + 1).getDate()
 								.getTime() / 60000) {
@@ -84,7 +88,7 @@ public class XyzCalculator implements Runnable {
 							i++;
 						}
 					}
-					// ��ݴ���
+					// 
 					int i1 = lf1.size() - 1, i2 = lf2.size() - 1, maxdt = 2;
 					// Double lf2lp=lf2.get(i2).price,lf1lp=lf1.get(i1).price;
 					Date dt1 = lf1.get(i1).getDate(), dt10 = lf1.get(0).getDate(), dt2 = lf2
@@ -116,7 +120,7 @@ public class XyzCalculator implements Runnable {
 					// -----------------Debugging----OK!!!
 					System.out.println("nt:" + nt.getTime() / 60000);
 					long st = nt.getTime() - 60000 * l, tmpt;
-					while (nt.getTime() / 60000 >= st / 60000) {
+					while (nt.getTime() / 60000 > st / 60000) {
 						// if(maxdt==1){i1--;}
 						// else if(maxdt==2){i2--;}
 						if (i1 >= 0
@@ -173,7 +177,7 @@ public class XyzCalculator implements Runnable {
 						{
 							i2--;
 						}
-						// ���Ӽ�һ
+						// 
 						nt.setTime(nt.getTime() - 60 * 1000);
 						// System.out.println("i1:"+i1+" i2:"+i2+" nt:"+nt.getTime()/60000);
 					}
@@ -208,7 +212,7 @@ public class XyzCalculator implements Runnable {
 							/ 60000 - lf1.get(0).getDate().getTime() / 60000);
 					System.out.println(lf2.get(lf2.size() - 1).getDate().getTime()
 							/ 60000 - lf2.get(0).getDate().getTime() / 60000);
-					// �ض� OK!
+					// 
 					if (lf1.size() < lf2.size()) {
 						for (int j = 0; j < lf2.size() - lf1.size();) {
 							lf2.remove(j);
@@ -225,17 +229,17 @@ public class XyzCalculator implements Runnable {
 						System.out.println("Data Ready...");
 						System.out.println("Data Count:" + lf1.size() + " "
 								+ lf2.size());
-						double stop_loss = -1, stop_profit = 1;
-						// �������
+						// 
 						ArrayList<Double> plf1 = new ArrayList<Double>(), plf2 = new ArrayList<Double>();
 						for (int i = 0; i < lf1.size(); i++) {
 							plf1.add(lf1.get(i).getPrice());
 							plf2.add(lf2.get(i).getPrice());
 						}
-						// ����Matlab�ӿ�
+						// 
 						System.out.println("Data " + p + " Calculate...");
-						result = dm.Arbitrage_Main(plf1, plf2, stop_loss,
-								stop_profit);
+						double stop_loss = -1, stop_profit = 1;
+						tradeCost=0;//-----debugging-----
+						result = dm.Arbitrage_Main(plf1, plf2, stop_loss,stop_profit,tradeCost);
 						System.out.println("Calculate Done...");
 						// result = dm.Open(lf1, lf2, 91, 92,0,0,93); test
 						// output xyk
@@ -250,7 +254,8 @@ public class XyzCalculator implements Runnable {
 							System.out.println("y = " + y);
 							System.out.println("k = " + k);
 							// insert into sql
-							DatabaseUtil.insert(new Xyz(p, x, y, k));
+							Xyz newXyz = new Xyz(p, x, y, k);
+							ms.InsertFXYParams(newXyz.getGroup(), newXyz.getX(), newXyz.getY(), newXyz.getZ());
 						} else {
 							// todayRun=false;
 							System.out
@@ -258,7 +263,7 @@ public class XyzCalculator implements Runnable {
 						}
 					}
 
-				}// for()3���
+				}// for()
 
 				/*
 				 * File parafile =new File("para_xyk"); if(!parafile.exists()){
@@ -270,14 +275,14 @@ public class XyzCalculator implements Runnable {
 				 * y+ "\t" + k); bufferWritter.close(); } catch (IOException e)
 				 * { e.printStackTrace(); }
 				 */
-			} else {// ���򣬽���˯��
+			} else {// 
 				try {
 					if (sleepPF) {
 						System.out.println(now_hour + ":" + now_min
 								+ "THread sleeping...");
 						sleepPF = false;
 					}
-					Thread.sleep(60 * 1000);// 1���Ӽ��һ��
+					Thread.sleep(60 * 1000);// 
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

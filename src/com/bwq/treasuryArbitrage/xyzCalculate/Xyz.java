@@ -1,13 +1,24 @@
 package com.bwq.treasuryArbitrage.xyzCalculate;
 
+import java.util.Date;
+
 public class Xyz {
 	private int group;
+	private Date time;
 	private double x;
 	private double y;
 	private double z;
 	
-	public Xyz(int group, double x, double y, double z) {
+	public Xyz(int group, double x, double y, double z){
 		this.group = group;
+		this.x = x;
+		this.y = y;
+		this.z = z;
+	}
+	
+	public Xyz(int group, Date time, double x, double y, double z) {
+		this.group = group;
+		this.time = time;
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -19,6 +30,14 @@ public class Xyz {
 	
 	public int getGroup() {
 		return group;
+	}
+	
+	public Date getTime() {
+		return time;
+	}
+
+	public void setTime(Date time) {
+		this.time = time;
 	}
 	
 	public double getX() {

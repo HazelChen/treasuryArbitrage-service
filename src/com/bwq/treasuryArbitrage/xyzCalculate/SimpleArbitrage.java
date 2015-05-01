@@ -23,4 +23,8 @@ public class SimpleArbitrage {
 	public double getPrice() {
 		return price;
 	}
+
+	public double setPrice(double price) {
+		return this.price = price;
+	}
 }
