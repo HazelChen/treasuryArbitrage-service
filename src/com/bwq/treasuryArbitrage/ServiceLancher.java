@@ -1,9 +1,9 @@
 package com.bwq.treasuryArbitrage;
 
 import com.bwq.treasuryArbitrage.dataFetch.DataFetcher;
-import com.bwq.treasuryArbitrage.modelsCalculation.calculator.LambdaCalculator;
-import com.bwq.treasuryArbitrage.modelsCalculation.calculator.OptimalKTCalculator;
-import com.bwq.treasuryArbitrage.modelsCalculation.calculator.XyzCalculator;
+import com.bwq.treasuryArbitrage.xyzCalculate.LambdaCalculator;
+import com.bwq.treasuryArbitrage.xyzCalculate.OptimalKTCalculator;
+import com.bwq.treasuryArbitrage.xyzCalculate.XyzCalculator;
 
 public class ServiceLancher {
 	

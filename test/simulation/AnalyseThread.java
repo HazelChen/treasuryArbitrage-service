@@ -8,9 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.bwq.treasuryArbitrage.modelsCalculation.MatlabCaller;
-
-
 public class AnalyseThread implements Runnable {
 	double buyprice = 0, saleprice = 0,newprice1 = -1,newprice2 = -1,newprice3 = -1,
 			price1,price2;
