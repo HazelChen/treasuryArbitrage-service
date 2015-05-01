@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.bwq.treasuryArbitrage.xyzCalculate.MatlabCaller;
+import com.bwq.treasuryArbitrage.modelsCalculation.MatlabCaller;
 
 
 public class AnalyseThread implements Runnable {

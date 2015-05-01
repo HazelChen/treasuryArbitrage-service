@@ -9,12 +9,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.bwq.treasuryArbitrage.xyzCalculate.Lambda;
-import com.bwq.treasuryArbitrage.xyzCalculate.OptimalKT;
-import com.bwq.treasuryArbitrage.xyzCalculate.Xyz;
+import com.bwq.treasuryArbitrage.modelsCalculation.model.Lambda;
+import com.bwq.treasuryArbitrage.modelsCalculation.model.OptimalKT;
+import com.bwq.treasuryArbitrage.modelsCalculation.model.Xyz;
 
 
-public class ModelParamsService {
+public class ModelCalculationService {
 	private Database database = new Database();
 	private DateFormat formater = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
 	
@@ -22,23 +22,10 @@ public class ModelParamsService {
 	private final String WXY = "wxyArbParams";
 	private final String DJ = "djArbParams";
 	
-	public static void main(String[] args) {
-		ModelParamsService ms = new ModelParamsService();
-		ms.InsertFXYParams(1, 1, 2, 3);
-		ms.getFXYParamsByNum(1);
-		
-		ms.InsertWXYParams(1, 2, 3);
-		ms.getWXYParamsByNum(1);
-		
-		ms.InsertDJParams(1, 2, 3);
-		ms.getDJParamsByNum(1);
-		
-	}
-	
-	public ModelParamsService(){}
+	public ModelCalculationService(){}
 	
 	//�������FXY/WXY/DJ=============================================================================================
-	public boolean InsertFXYParams(int group, double x, double y, double k){
+	public boolean InsertFXYParams(Xyz xyz){
 		boolean result = false;
 		
 		Connection connection=database.getConnection();
@@ -50,10 +37,10 @@ public class ModelParamsService {
 		try {
 			preparedStatement =connection.prepareStatement(sql);
 			preparedStatement.setString(1, time);
-			preparedStatement.setInt(2, group);
-			preparedStatement.setDouble(3, x);
-			preparedStatement.setDouble(4, y);
-			preparedStatement.setDouble(5, k);
+			preparedStatement.setInt(2, xyz.getGroup());
+			preparedStatement.setDouble(3, xyz.getX());
+			preparedStatement.setDouble(4, xyz.getY());
+			preparedStatement.setDouble(5, xyz.getZ());
 			preparedStatement.executeUpdate();
 			result = true;
 			System.out.println("插入成功");
@@ -68,7 +55,7 @@ public class ModelParamsService {
 		return result;
 	}
 	
-	public boolean InsertWXYParams(int group, double optimalLambda1, double optimalLambda2){
+	public boolean InsertWXYParams(Lambda lambda){
 		boolean result = false;
 		
 		Connection connection=database.getConnection();
@@ -80,9 +67,9 @@ public class ModelParamsService {
 		try {
 			preparedStatement =connection.prepareStatement(sql);
 			preparedStatement.setString(1, time);
-			preparedStatement.setInt(2, group);
-			preparedStatement.setDouble(3, optimalLambda1);
-			preparedStatement.setDouble(4, optimalLambda2);
+			preparedStatement.setInt(2, lambda.getGroup());
+			preparedStatement.setDouble(3, lambda.getLambda1());
+			preparedStatement.setDouble(4, lambda.getLambda2());
 			preparedStatement.executeUpdate();
 			result = true;
 			System.out.println("插入成功");
@@ -97,7 +84,7 @@ public class ModelParamsService {
 		return result;
 	}
 	
-	public boolean InsertDJParams(int group, double k, double t){
+	public boolean InsertDJParams(OptimalKT optimalKT){
 		boolean result = false;
 		
 		Connection connection=database.getConnection();
@@ -109,9 +96,9 @@ public class ModelParamsService {
 		try {
 			preparedStatement =connection.prepareStatement(sql);
 			preparedStatement.setString(1, time);
-			preparedStatement.setInt(2, group);
-			preparedStatement.setDouble(3, k);
-			preparedStatement.setDouble(4, t);
+			preparedStatement.setInt(2, optimalKT.getGroup());
+			preparedStatement.setDouble(3, optimalKT.getOptimalK());
+			preparedStatement.setDouble(4, optimalKT.getOptimalT());
 			preparedStatement.executeUpdate();
 			result = true;
 			System.out.println("插入成功");
@@ -147,8 +134,10 @@ public class ModelParamsService {
 				params[1] = resultSet.getDouble(3);
 				params[2] = resultSet.getDouble(4);
 			}
-		} catch (SQLException | ParseException e) {
-			// TODO �Զ���ɵ� catch ��
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("没有找到记录");
+		} catch (ParseException e) {
 			e.printStackTrace();
 			System.err.println("没有找到记录");
 		}
@@ -178,8 +167,10 @@ public class ModelParamsService {
 				params[0] = resultSet.getDouble(2);
 				params[1] = resultSet.getDouble(3);
 			}
-		} catch (SQLException | ParseException e) {
-			// TODO �Զ���ɵ� catch ��
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("没有找到记录");
+		} catch (ParseException e) {
 			e.printStackTrace();
 			System.err.println("没有找到记录");
 		}
@@ -209,8 +200,10 @@ public class ModelParamsService {
 				params[0] = resultSet.getDouble(2);
 				params[1] = resultSet.getDouble(3);
 			}
-		} catch (SQLException | ParseException e) {
-			// TODO �Զ���ɵ� catch ��
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("没有找到记录");
+		} catch (ParseException e) {
 			e.printStackTrace();
 			System.err.println("没有找到记录");
 		}

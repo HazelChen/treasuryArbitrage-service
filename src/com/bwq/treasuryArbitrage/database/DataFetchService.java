@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import com.bwq.treasuryArbitrage.dataFetch.CThostFtdcDepthMarketDataField;
-import com.bwq.treasuryArbitrage.xyzCalculate.SimpleArbitrage;
-import com.bwq.treasuryArbitrage.xyzCalculate.Xyz;
+import com.bwq.treasuryArbitrage.modelsCalculation.SimpleArbitrage;
+import com.bwq.treasuryArbitrage.modelsCalculation.model.Xyz;
 
-public class DatabaseUtil {
+public class DataFetchService {
 	private static final DateFormat DATE_FORMAT = new SimpleDateFormat(
 			"yyyyMMdd HH:mm:ss");
 
@@ -171,67 +171,14 @@ public class DatabaseUtil {
 				SimpleArbitrage tem = new SimpleArbitrage(price, date);
 				result.add(tem);
 			}
-		} catch (SQLException | ParseException e) {
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("û���ҵ���¼");
+		} catch (ParseException e) {
 			e.printStackTrace();
 			System.err.println("û���ҵ���¼");
 		}
 		database.terminate(resultSet, preparedStatement, connection);
 		return result;
 	}
-	
-	public static boolean insert(Xyz xyz) {
-		boolean result = false;
-
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
-		String sql = "Insert into params (groupNum,param1,param2,param3,date) values(?,?,?,?,?)";
-
-		connection = database.getConnection();
-		try {
-			preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(1, xyz.getGroup());
-			preparedStatement.setDouble(2, xyz.getX());
-			preparedStatement.setDouble(3, xyz.getY());
-			preparedStatement.setDouble(4, xyz.getZ());
-			preparedStatement.setLong(5, new Date().getTime());
-			preparedStatement.executeUpdate();
-			result = true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			result = false;
-			System.err.println("����ʧ��");
-		}
-		database.terminate(resultSet, preparedStatement, connection);
-
-		return result;
-	}
-	
-	public static Xyz getXyzByGroup(int group) {
-		Xyz xyz = new Xyz(group);
-
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
-		String sql = "select param1,param2,param3 from params where groupNum = "
-				+ group + " order by id desc limit 1";
-
-		connection = database.getConnection();
-		try {
-			preparedStatement = connection.prepareStatement(sql);
-			resultSet = preparedStatement.executeQuery();
-			while (resultSet.next()) {
-				xyz.setX(resultSet.getDouble(1));
-				xyz.setY(resultSet.getDouble(2));
-				xyz.setZ(resultSet.getDouble(3));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.err.println("û���ҵ���¼");
-		}
-		database.terminate(resultSet, preparedStatement, connection);
-
-		return xyz;
-	}
-
 }

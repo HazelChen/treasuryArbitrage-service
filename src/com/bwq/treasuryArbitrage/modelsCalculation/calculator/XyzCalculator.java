@@ -1,12 +1,15 @@
-package com.bwq.treasuryArbitrage.xyzCalculate;
+package com.bwq.treasuryArbitrage.modelsCalculation.calculator;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 import com.bwq.treasuryArbitrage.common.ArbitrageCodes;
-import com.bwq.treasuryArbitrage.database.DatabaseUtil;
-import com.bwq.treasuryArbitrage.database.ModelParamsService;
+import com.bwq.treasuryArbitrage.database.DataFetchService;
+import com.bwq.treasuryArbitrage.database.ModelCalculationService;
+import com.bwq.treasuryArbitrage.modelsCalculation.MatlabCaller;
+import com.bwq.treasuryArbitrage.modelsCalculation.SimpleArbitrage;
+import com.bwq.treasuryArbitrage.modelsCalculation.model.Xyz;
 
 public class XyzCalculator implements Runnable {
 	double buyprice, saleprice,tradeCost;
@@ -15,7 +18,7 @@ public class XyzCalculator implements Runnable {
 	boolean todayRun, sleepPF;
 	MatlabCaller dm;
 	Object[] result;
-	ModelParamsService ms;
+	ModelCalculationService ms;
 	
 	public XyzCalculator() {
 		buyprice = 0;
@@ -26,7 +29,7 @@ public class XyzCalculator implements Runnable {
 		sleepPF = true;
 		dm = new MatlabCaller();
 		result = null;
-		ms = new ModelParamsService();
+		ms = new ModelCalculationService();
 	}
 
 	public void run() {
@@ -69,8 +72,8 @@ public class XyzCalculator implements Runnable {
 						break;
 					}
 
-					ArrayList<SimpleArbitrage> lf1 = DatabaseUtil.getHistoryArbitrages(p1);// �������
-					ArrayList<SimpleArbitrage> lf2 = DatabaseUtil.getHistoryArbitrages(p2);// �������
+					ArrayList<SimpleArbitrage> lf1 = DataFetchService.getHistoryArbitrages(p1);// �������
+					ArrayList<SimpleArbitrage> lf2 = DataFetchService.getHistoryArbitrages(p2);// �������
 					// 
 					for (int i = 0; i < lf1.size() - 1;) {
 						if (lf1.get(i).getDate().getTime() / 60000 == lf1.get(i + 1).getDate()

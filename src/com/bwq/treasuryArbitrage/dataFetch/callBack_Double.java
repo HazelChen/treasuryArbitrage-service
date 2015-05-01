@@ -1,5 +1,5 @@
 package com.bwq.treasuryArbitrage.dataFetch;
-import com.bwq.treasuryArbitrage.database.DatabaseUtil;
+import com.bwq.treasuryArbitrage.database.DataFetchService;
 import com.sun.jna.Callback;
 
 public class callBack_Double implements Callback{
@@ -8,7 +8,7 @@ public class callBack_Double implements Callback{
 		CThostFtdcDepthMarketDataField.getInstance().setData(val, loc);
 		if(loc == 43){
 			System.out.println("Start Insert");
-			DatabaseUtil.insert(CThostFtdcDepthMarketDataField.getInstance());
+			DataFetchService.insert(CThostFtdcDepthMarketDataField.getInstance());
 		}
 	}
 	

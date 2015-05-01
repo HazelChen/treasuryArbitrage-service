@@ -1,4 +1,4 @@
-package com.bwq.treasuryArbitrage.xyzCalculate;
+package com.bwq.treasuryArbitrage.modelsCalculation.model;
 
 import java.util.Date;
 

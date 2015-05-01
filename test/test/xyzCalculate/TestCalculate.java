@@ -1,6 +1,6 @@
 package test.xyzCalculate;
 
-import com.bwq.treasuryArbitrage.xyzCalculate.XyzCalculator;
+import com.bwq.treasuryArbitrage.modelsCalculation.calculator.XyzCalculator;
 
 public class TestCalculate {
 	
