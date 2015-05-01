@@ -1,6 +1,16 @@
 package com.bwq.treasuryArbitrage.dataFetch;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import com.bwq.treasuryArbitrage.modelsCalculation.SimpleArbitrage;
+
 public class CThostFtdcDepthMarketDataField{
+	private static final DateFormat DATE_FORMAT = new SimpleDateFormat(
+			"yyyyMMdd HH:mm:ss");
+	
 	private static CThostFtdcDepthMarketDataField self;
 	
 	///交易日
@@ -242,6 +252,19 @@ public class CThostFtdcDepthMarketDataField{
 		return self;
 	}
 	
+	
+	public SimpleArbitrage getSnapshot(){
+		double price = self.LastPrice;
+		Date date = null;
+		try {
+			date = DATE_FORMAT.parse(self.TradingDay + " " + self.UpdateTime);
+		} catch (ParseException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
+		SimpleArbitrage simpleArb = new SimpleArbitrage(price,date);
+		return simpleArb;
+	}
 //	public CThostFtdcDepthMarketDataField clone(){
 //		CThostFtdcDepthMarketDataField tem = self.clone();
 //		return tem;
