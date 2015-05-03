@@ -253,7 +253,7 @@ public class LambdaCalculator implements Runnable {
 								l2 = Double.valueOf(String.valueOf(result[1]));	
 								//insert into sql
 								Lambda newLambda = new Lambda(p, l1, l2);
-								ms.InsertWXYParams(newLambda.getGroup(),newLambda.getLambda1(),newLambda.getLambda2());
+								ms.InsertWXYParams(newLambda);
 							} else {
 								// todayRun=false;
 								System.out

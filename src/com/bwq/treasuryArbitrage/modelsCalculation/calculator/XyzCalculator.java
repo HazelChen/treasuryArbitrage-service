@@ -258,7 +258,7 @@ public class XyzCalculator implements Runnable {
 							System.out.println("k = " + k);
 							// insert into sql
 							Xyz newXyz = new Xyz(p, x, y, k);
-							ms.InsertFXYParams(newXyz.getGroup(), newXyz.getX(), newXyz.getY(), newXyz.getZ());
+							ms.InsertFXYParams(newXyz);
 						} else {
 							// todayRun=false;
 							System.out

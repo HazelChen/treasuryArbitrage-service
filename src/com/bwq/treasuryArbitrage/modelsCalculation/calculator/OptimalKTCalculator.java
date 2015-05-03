@@ -250,7 +250,7 @@ public class OptimalKTCalculator implements Runnable {
 								OptimalT = Double.valueOf(String.valueOf(result[1]));	
 								//insert into sql
 								OptimalKT newOptimalKT = new OptimalKT(p, OptimalK, OptimalT);
-								ms.InsertDJParams(newOptimalKT.getGroup(), newOptimalKT.getOptimalK(), newOptimalKT.getOptimalT());
+								ms.InsertDJParams(newOptimalKT);
 							} else {
 								// todayRun=false;
 								System.out

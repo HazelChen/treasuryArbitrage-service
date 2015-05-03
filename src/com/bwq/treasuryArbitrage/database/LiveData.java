@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import com.bwq.treasuryArbitrage.common.ArbitrageCodes;
 import com.bwq.treasuryArbitrage.modelsCalculation.SimpleArbitrage;
 
-import edu.nju.treasuryArbitrage.model.LiveData;
-
 public class LiveData {
 
 	private ArrayList<SimpleArbitrage> simpleArbs= new ArrayList<SimpleArbitrage>();
