@@ -27,4 +27,5 @@ public class SimpleArbitrage {
 	public double setPrice(double price) {
 		return this.price = price;
 	}
+
 }

@@ -1,7 +1,7 @@
 package com.bwq.treasuryArbitrage.dataFetch;
 
+import com.bwq.treasuryArbitrage.common.LiveData;
 import com.bwq.treasuryArbitrage.database.DataFetchService;
-import com.bwq.treasuryArbitrage.database.LiveData;
 import com.sun.jna.Callback;
 
 public class callBack_Double implements Callback {

@@ -1,5 +1,6 @@
 package com.bwq.treasuryArbitrage;
 
+import com.bwq.treasuryArbitrage.common.LiveData;
 import com.bwq.treasuryArbitrage.dataFetch.DataFetcher;
 import com.bwq.treasuryArbitrage.modelsCalculation.calculator.LambdaCalculator;
 import com.bwq.treasuryArbitrage.modelsCalculation.calculator.OptimalKTCalculator;
@@ -9,6 +10,14 @@ public class ServiceLancher {
 	
 	public static void main(String[] args) {
 		fetchData();
+//		try {
+//			Thread.sleep(1000);
+//		} catch (InterruptedException e) {
+//			// TODO 自动生成的 catch 块
+//			e.printStackTrace();
+//		}
+//		System.err.println("==========================");
+//		System.err.println(LiveData.getInstance().getData("TF1506").getPrice());
 		//calculateXyz();
 		//calculateLambda();
 		//calculateOptimalKT();

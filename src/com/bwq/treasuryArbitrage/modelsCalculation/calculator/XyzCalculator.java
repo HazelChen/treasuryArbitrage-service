@@ -34,7 +34,7 @@ public class XyzCalculator implements Runnable {
 
 	public void run() {
 		Calendar calendar = Calendar.getInstance();
-		System.out.println("Construction Done...");
+		System.out.println("Xyz Construction Done...");
 		while (true) {
 			now = new Date();
 			calendar.setTime(now);
@@ -47,7 +47,7 @@ public class XyzCalculator implements Runnable {
 			if (!todayRun && now_hour >= 0 && now_min >= 2) {
 				todayRun = true;
 				sleepPF = true;
-				System.out.println("Thread run...");
+				System.out.println("Xyz Thread run...");
 				String p1 = null, p2 = null;
 				for (int p = 1; p < 4; p++) // p������
 				{

@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.bwq.treasuryArbitrage.common.ArbitrageCodes;
+import com.bwq.treasuryArbitrage.common.LiveData;
 import com.bwq.treasuryArbitrage.modelsCalculation.SimpleArbitrage;
 
 public class DataForAnalyzer {
@@ -18,8 +20,10 @@ public class DataForAnalyzer {
 	private static final DateFormat DATE_FORMAT = new SimpleDateFormat(
 			"yyyyMMdd HH:mm:ss");
 	private static Database database = new Database();
-
-	public static List<SimpleArbitrage> getDataToday(String code){
+	private static String[] codes = ArbitrageCodes.getCodes();
+	
+	public static List<SimpleArbitrage> getDataToday(int index){
+		String code = codes[index];
 		List<SimpleArbitrage> result = new ArrayList<SimpleArbitrage>();
 		
 		Connection connection=null;
@@ -49,7 +53,8 @@ public class DataForAnalyzer {
 		return result;
 	}
 	
-	public static SimpleArbitrage getCurData(String code){
+	public static SimpleArbitrage getCurData(int index){
+		String code = codes[index];
 		SimpleArbitrage simpleArb = null;
 		
 		simpleArb = LiveData.getInstance().getData(code);
