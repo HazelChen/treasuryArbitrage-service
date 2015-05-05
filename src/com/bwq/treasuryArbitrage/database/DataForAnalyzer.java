@@ -43,10 +43,12 @@ public class DataForAnalyzer {
 				SimpleArbitrage tem = new SimpleArbitrage(price,date);
 				result.add(tem);
 			}
-		} catch (SQLException | ParseException e) {
-			// TODO 自动生成的 catch 块
+		} catch (SQLException e) {
 			e.printStackTrace();
 			System.err.println("没有找到记录");
+		} catch (ParseException e) {
+			e.printStackTrace();
+			System.err.println("格式转换有误");
 		}
 		database.terminate(resultSet,preparedStatement,connection);
 		

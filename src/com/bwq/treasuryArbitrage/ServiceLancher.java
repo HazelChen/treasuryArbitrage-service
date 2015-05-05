@@ -10,6 +10,8 @@ public class ServiceLancher {
 	
 	public static void main(String[] args) {
 		fetchData();
+		
+//=======================测试数据获取================================		
 //		try {
 //			Thread.sleep(1000);
 //		} catch (InterruptedException e) {
@@ -18,6 +20,8 @@ public class ServiceLancher {
 //		}
 //		System.err.println("==========================");
 //		System.err.println(LiveData.getInstance().getData("TF1506").getPrice());
+//=======================测试数据获取================================	
+		
 		//calculateXyz();
 		//calculateLambda();
 		//calculateOptimalKT();

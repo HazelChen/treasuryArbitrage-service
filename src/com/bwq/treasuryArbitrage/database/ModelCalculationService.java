@@ -24,7 +24,7 @@ public class ModelCalculationService {
 	
 	public ModelCalculationService(){}
 	
-	//�������FXY/WXY/DJ=============================================================================================
+	//插入参数FXY/WXY/DJ=============================================================================================
 	public boolean InsertFXYParams(Xyz xyz){
 		boolean result = false;
 		
@@ -45,7 +45,6 @@ public class ModelCalculationService {
 			result = true;
 			System.out.println("插入成功");
 		} catch (SQLException e) {
-			// TODO �Զ���ɵ� catch ��
 			e.printStackTrace();
 			result = false;
 			System.err.println("插入失败");
@@ -74,7 +73,6 @@ public class ModelCalculationService {
 			result = true;
 			System.out.println("插入成功");
 		} catch (SQLException e) {
-			// TODO �Զ���ɵ� catch ��
 			e.printStackTrace();
 			result = false;
 			System.err.println("插入失败");
@@ -103,7 +101,6 @@ public class ModelCalculationService {
 			result = true;
 			System.out.println("插入成功");
 		} catch (SQLException e) {
-			// TODO �Զ���ɵ� catch ��
 			e.printStackTrace();
 			result = false;
 			System.err.println("插入失败");
@@ -113,7 +110,7 @@ public class ModelCalculationService {
 		return result;
 	}
 	
-	//��ȡ����FXY/WXY/DJ=============================================================================================
+	//获取参数FXY/WXY/DJ=============================================================================================
 	public Xyz getFXYParamsByNum(int group){
 		double[] params = new double[3];
 		Date time = null;
@@ -139,7 +136,7 @@ public class ModelCalculationService {
 			System.err.println("没有找到记录");
 		} catch (ParseException e) {
 			e.printStackTrace();
-			System.err.println("没有找到记录");
+			System.err.println("格式转换有误");
 		}
 		database.terminate(resultSet,preparedStatement,connection);
 		
@@ -172,7 +169,7 @@ public class ModelCalculationService {
 			System.err.println("没有找到记录");
 		} catch (ParseException e) {
 			e.printStackTrace();
-			System.err.println("没有找到记录");
+			System.err.println("格式转换有误");
 		}
 		database.terminate(resultSet,preparedStatement,connection);
 		
@@ -205,7 +202,7 @@ public class ModelCalculationService {
 			System.err.println("没有找到记录");
 		} catch (ParseException e) {
 			e.printStackTrace();
-			System.err.println("没有找到记录");
+			System.err.println("格式转换有误");
 		}
 		database.terminate(resultSet,preparedStatement,connection);
 		

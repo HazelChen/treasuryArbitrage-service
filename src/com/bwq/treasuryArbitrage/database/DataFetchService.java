@@ -12,7 +12,6 @@ import java.util.Date;
 
 import com.bwq.treasuryArbitrage.dataFetch.CThostFtdcDepthMarketDataField;
 import com.bwq.treasuryArbitrage.modelsCalculation.SimpleArbitrage;
-import com.bwq.treasuryArbitrage.modelsCalculation.model.Xyz;
 
 public class DataFetchService {
 	private static final DateFormat DATE_FORMAT = new SimpleDateFormat(
@@ -173,10 +172,10 @@ public class DataFetchService {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.err.println("û���ҵ���¼");
+			System.err.println("没有找到记录");
 		} catch (ParseException e) {
 			e.printStackTrace();
-			System.err.println("û���ҵ���¼");
+			System.err.println("格式转换有误");
 		}
 		database.terminate(resultSet, preparedStatement, connection);
 		return result;
